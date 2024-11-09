@@ -1,0 +1,55 @@
+using System;
+
+class WeatherForecast
+{
+    public int Temperature { get; private set; }
+    public string Conditions { get; private set; }
+
+    public WeatherForecast(int temperature, string conditions)
+    {
+        SetTemperature(temperature);
+        Conditions = conditions;
+    }
+
+    public void SetTemperature(int temp)
+    {
+        if (temp > 15)
+            throw new ArgumentOutOfRangeException("Қыстық маусым үшін температура тым жоғары");
+        
+        Temperature = temp;
+    }
+
+    public string GetForecast()
+    {
+        return $"Температура: {Temperature}°C, Жағдай: {Conditions}";
+    }
+}
+
+class Program
+{
+    static void Main()
+    {
+        try
+        {
+            Console.Write("Температураны енгізіңіз: ");
+            int temperature = int.Parse(Console.ReadLine());
+
+            Console.Write("Ауа-райы жағдайын енгізіңіз: ");
+            string conditions = Console.ReadLine();
+
+            WeatherForecast forecast = new WeatherForecast(temperature, conditions);
+            Console.WriteLine(forecast.GetForecast());
+
+            // Температураны 20°C-қа өзгертпек
+            forecast.SetTemperature(20);
+        }
+        catch (ArgumentOutOfRangeException ex)
+        {
+            Console.WriteLine($"Қате: {ex.Message}");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Қате пайда болды: {ex.Message}");
+        }
+    }
+}
